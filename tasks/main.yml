@@ -1,0 +1,24 @@
+---
+- name: go get stretcher 
+  shell: >  
+    bash -lc "go get github.com/fujiwara/stretcher";
+
+- name: make
+  shell: make chdir=/usr/local/go/bin/src/github.com/fujiwara/stretcher/
+
+- name: copy
+  copy: src=stretcher.service dest=/etc/systemd/system/stretcher.service owner=root group=root mode=0644
+
+
+- name: systemd
+  systemd:
+    name: stretcher.service
+    daemon_reload: yes
+    enabled: yes
+
+
+- name: systemd
+  systemd:
+    state: started
+    name: stretcher.service
+    daemon_reload: yes
